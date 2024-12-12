@@ -1,26 +1,109 @@
 
-async function generate() {
-    const session = await ort.InferenceSession.create('website/model.onnx');
-    
-    n = Float32Array.from([ 0.0452,  0.9785,  0.5412, -1.5842,  0.3201, -1.2122, -0.1121, -0.3994,
-        -0.1090,  0.9974, -0.5831,  1.2389, -0.7540, -0.0452, -0.6943, -0.4557,
-         0.0488, -0.5095,  0.0950, -0.5702,  1.2090, -2.0802, -0.4485,  0.2961,
-        -0.1948, -1.4766,  0.6726,  0.1664, -0.1813,  0.1456, -0.7986, -1.7796,
-        -0.2345,  1.1202,  1.7319, -0.5127, -0.2837,  0.6130, -1.5276, -0.5256,
-        -0.4143, -0.5227, -0.4901, -0.4791,  0.6040,  0.2983, -1.5111,  1.3629,
-        -0.2271, -1.5814, -1.9099, -0.9880, -0.3647, -0.5544,  0.1261,  2.0953,
-         0.8690, -0.2131,  1.7900,  0.1229, -1.0457,  1.0736,  0.9359, -0.1364,
-        -0.2982,  0.4300,  0.5376,  0.6805,  1.3576,  0.7296, -0.1719,  0.8455,
-        -0.3712,  0.0705, -0.9302,  1.0567,  0.1960,  2.1608,  0.2013, -0.8483,
-        -0.3340,  2.4853, -1.0367, -0.8782, -0.5115,  0.7011, -0.1841,  0.4415,
-        -1.3967, -0.6406,  0.8192,  0.0142, -0.4338,  0.3134,  0.0681,  0.1441,
-        0.5165,  0.5266,  0.3943,  0.4764]);
-    
-    const tensor = new ort.Tensor('float32', n, [1, 100]);
+const imageSize = 64;
+const canvasSize = 128;
+const model = 'website/model.onnx';
+
+// Sources:
+// https://stackoverflow.com/questions/4899799/whats-the-best-way-to-set-a-single-pixel-in-an-html5-canvas
+
+function drawImage(context, data, imageSize, canvasSize) {
+    pixelSize = canvasSize / imageSize;
+    function adjustByte(value) {
+        value *= 255;
+        if (value > 255) {
+            value = 255;
+        }
+        if (value < 0) {
+            value = 0;
+        }
+        return value;
+    }
+
+
+    function setPixel(x, y, r, g, b) {
+        r = adjustByte(r);
+        g = adjustByte(g);
+        b = adjustByte(b);
+        context.fillStyle = "rgba(" + r + "," + g + "," + b + ",1)";
+        context.fillRect(x * pixelSize, y * pixelSize, pixelSize + 1, pixelSize + 1);
+    }
+
+    for (var y = 0; y < imageSize; ++y) {
+        for (var x = 0; x < imageSize; ++x) {
+            index = imageSize * y + x;
+            channelSize = imageSize * imageSize;
+            r = data[index];
+            g = data[index + channelSize];
+            b = data[index + channelSize * 2];
+            setPixel(x, y, r, g, b);
+        }
+    }
+}
+
+var noise_deviation = 1.0;
+var noise_mean = 0.0;
+
+function changeDeviation() {
+    const input = document.getElementById('deviation_input');
+    noise_deviation = Number.parseFloat(input.value);
+}
+
+function changeMean() {
+    const input = document.getElementById('mean_input');
+    noise_mean = Number.parseFloat(input.value);
+}
+
+// Borrowed from:
+// https://stackoverflow.com/a/36481059
+// https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
+function randomNormal(mean, std) {
+    const u = 1 - Math.random();
+    const v = 1 - Math.random();
+    const z = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    return z * std + mean;
+}
+
+function randomNoise(size) {
+    let arr = [];
+    for (var i = 0; i < size; ++i) {
+        arr.push(randomNormal(noise_mean, noise_deviation));
+    }
+    return Float32Array.from(arr);
+}
+
+
+// Sources:
+// https://github.com/microsoft/onnxruntime-inference-examples/tree/main/js/quick-start_onnxruntime-web-script-tag
+async function fillCanvas(session, canvas) {
+    const tensor = new ort.Tensor('float32', randomNoise(100), [1, 100]);
     const feed = {input: tensor};
 
     const results = await session.run(feed);
     const data = results.output.data;
 
-    console.log(data);
+    var context = canvas.getContext('2d');
+
+    drawImage(context, data, imageSize, canvasSize);
+}
+
+var session = null;
+
+async function generate() {
+    if (session === null) {
+        session = await ort.InferenceSession.create(model);
+    }
+
+    var canvases = document.getElementById('canvases');
+
+    //var promise = null;
+    for (let canvas of canvases.children) {
+        await fillCanvas(session, canvas);
+        /*if (promise === null) {
+            promise = fillCanvas(session, canvas);
+            continue;
+        }
+        promise.then(() => {
+            promise = fillCanvas(session, canvas);
+        });*/
+    }
 }

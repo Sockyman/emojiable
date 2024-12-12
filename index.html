@@ -2,11 +2,40 @@
 <html>
     <head>
         <title>Emojiable</title>
+        <!-- source: https://github.com/microsoft/onnxruntime-inference-examples/tree/main/js/quick-start_onnxruntime-web-script-tag -->
         <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
         <script src="website/main.js"></script>
     </head>
 
-    <body>
+    <body style="display: flex; flex-direction: column;">
+        
+        <div id="canvases">
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+
+        </div>
+
         <button onclick="generate()">Generate</button>
+
+        <div>
+            <p>Noise standard deviation: </p>
+            <input type="number" value="1.0" step="0.1" id="deviation_input" onchange="changeDeviation()">
+        </div>
+        <div>
+            <p>Noise mean: </p>
+            <input type="number" value="0.0" step="0.1" id="mean_input" onchange="changeMean()">
+        </div>
     </body>
 </html>
