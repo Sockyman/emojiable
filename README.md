@@ -11,8 +11,9 @@ Please Refer to the slide and video for more details and References regarding th
 
 ### Examples
 GAN: 
+
 ![Timelapse](READMEimages/progress.gif)
 
 Wgan:
 
-![Wgan](READMEimages/wgan.gif)
+![Wgan](READMEimages/wgan.png)
