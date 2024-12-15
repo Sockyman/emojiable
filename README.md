@@ -14,6 +14,6 @@ GAN:
 
 ![Timelapse](READMEimages/progress.gif)
 
-Wgan:
+(BONUS: Wgan):
 
 ![Wgan](READMEimages/wgan.png)
