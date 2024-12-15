@@ -32,3 +32,9 @@ input {
     border-radius: 3px;
     font-size: 30px;
 }
+
+#canvases {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
