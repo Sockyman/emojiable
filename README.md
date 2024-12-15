@@ -1,4 +1,4 @@
-![Emojibale](READMEiamges/emojiable.png)
+![Emojibale](READMEimages/emojiable.png)
 
 ## An experimental study of the theory and implementation of Generative Adversarial Networks (BONUS WGAN)
 ### Purpose 
@@ -11,4 +11,4 @@ Please Refer to the slide and video for more details and References regarding th
 
 ### Examples
 GAN: 
-![Timelapse](READMEiamges/progress.gif)
+![Timelapse](READMEimages/progress.gif)
