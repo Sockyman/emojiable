@@ -1,0 +1,34 @@
+.title_image {
+    width: 30%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+p {
+    text-align: center;
+    font-family: 'Georgia';
+    font-size: 30px;
+}
+
+button {
+    font-family: 'Georgia';
+    border-radius: 3px;
+    font-size: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+input {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+    font-family: 'Georgia';
+    border-radius: 3px;
+    font-size: 30px;
+}

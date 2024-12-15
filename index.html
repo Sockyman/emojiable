@@ -5,26 +5,28 @@
         <!-- source: https://github.com/microsoft/onnxruntime-inference-examples/tree/main/js/quick-start_onnxruntime-web-script-tag -->
         <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
         <script src="website/main.js"></script>
+        <link rel="stylesheet" href="website/styles.css">
     </head>
 
     <body style="display: flex; flex-direction: column;">
-        
+        <img src="emojiable.png" class="title_image">
         <div id="canvases">
             <canvas width="128" height="128"></canvas>
             <canvas width="128" height="128"></canvas>
             <canvas width="128" height="128"></canvas>
             <canvas width="128" height="128"></canvas>
             <canvas width="128" height="128"></canvas>
+            <br>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <canvas width="128" height="128"></canvas>
+            <br>
             <canvas width="128" height="128"></canvas>
             <canvas width="128" height="128"></canvas>
             <canvas width="128" height="128"></canvas>
             <canvas width="128" height="128"></canvas>
             <canvas width="128" height="128"></canvas>
-            <canvas width="128" height="128"></canvas>
-            <canvas width="128" height="128"></canvas>
-            <canvas width="128" height="128"></canvas>
-            <canvas width="128" height="128"></canvas>
-
         </div>
 
         <button onclick="generate()">Generate</button>
