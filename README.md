@@ -8,7 +8,7 @@
 
 ### Model
 Please Refer to the slide and video for more details and References regarding the model!
-[![Watch the video](--)](https://www.youtube.com/watch?v=O2hfAqMDoOw)
+[![Watch the video](READMEimages/thumnail.png)](https://www.youtube.com/watch?v=O2hfAqMDoOw)
 
 ### Examples
 GAN: 
